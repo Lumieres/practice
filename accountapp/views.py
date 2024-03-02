@@ -1,16 +1,19 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordChangeView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, DeleteView
 
+from accountapp.decorator import account_ownership_required
 from accountapp.models import HelloWorld
 
-
+has_ownership = [account_ownership_required, login_required]
 # Create your views here.
-
+@login_required
 def hello_world(request):
     if(request.method == "POST"):
         temp = request.POST.get('hello_world_input')
@@ -35,12 +38,15 @@ class AccountDetailView(DetailView):
     context_object_name = 'target_user'
     template_name = "accountapp/detail.html"
 
+@method_decorator(has_ownership, 'get')
+@method_decorator(has_ownership, 'post')
 class AccountUpdateView(PasswordChangeView):
     model = User
     context_object_name = "target_user"
     success_url = reverse_lazy("accountapp:hello_world")
     template_name = "accountapp/update.html"
-
+@method_decorator(has_ownership, 'get')
+@method_decorator(has_ownership, 'post')
 class AccountDeleteView(DeleteView):
     model = User
     context_object_name = "target_user"
