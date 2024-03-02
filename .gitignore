@@ -80,4 +80,7 @@ fabric.properties
 /venv/
 db.sqlite3
 __pycache__
+media/
+staticfiles/
+.DS_Store
 
