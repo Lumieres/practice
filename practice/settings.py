@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "bootstrap4",
     # local
     "accountapp",
+    "profileapp",
 ]
 
 MIDDLEWARE = [
