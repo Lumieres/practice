@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # local
     "accountapp",
     "profileapp",
+    "articleapp",
 ]
 
 MIDDLEWARE = [
